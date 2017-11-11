@@ -78,7 +78,7 @@ int create_random_list(list *l, int num){
     create(l);
     int i, temp;
     for(i = 0; i<num; i++){
-        temp = rand();
+        temp = rand() % 50;
         //if an error occurred during insertion
         if(!insert(l, &temp)){
             return 0;
@@ -114,5 +114,42 @@ int create_decreasing_list(list *l, int num){
         if(!insert(l, &temp))
             return 0;
     }
+    return 1;
+}
+
+int insertion_sort(list *l){
+    //pointer moves over elements from left to right, compares them with value of selector which is trying to find minimum value
+    node *pointer, *selector, *minimum;
+    elem info;
+    pointer = l->first;
+
+    //if list is empty
+    if(pointer == NULL)
+        return 0;
+    //if pointer->next is null, it is last element and list is already ordered
+    while(pointer->next != NULL){
+        selector = pointer->next;
+        minimum = pointer;
+        while(selector != NULL){
+            if(selector->info < minimum->info)
+                minimum = selector;
+            selector = selector->next;
+        }
+
+        //do the switch
+        info = pointer->info;
+        pointer ->info = minimum->info;
+        minimum->info = info;
+
+        pointer = pointer->next;
+    }
+    return 1;
+}
+
+int bubble_sort(list *l){
+    return 1;
+}
+
+int quick_sort(list *l){
     return 1;
 }
