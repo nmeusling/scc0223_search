@@ -5,6 +5,9 @@
 #include "list.h"
 #include <unistd.h>
 
+/*
+ * Inicializa a lista
+ */
 void create(list *l) {
     l->first = NULL;
     l->last = NULL;
@@ -31,7 +34,9 @@ int insert(list *l, elem *x) {
     l->last = p;
     return 1;
 }
-
+/*
+ * Insere um elemento na lista ordenada
+ */
 int insert_ordered(list *l, elem *x){
     node *current, *prev, *p;
 
@@ -64,7 +69,9 @@ int insert_ordered(list *l, elem *x){
     return 1;
 }
 
-
+/*
+ * Libera a memoria da lista
+ */
 void destroy(list *l) {
 
     node *p;
@@ -79,7 +86,10 @@ void destroy(list *l) {
 
     l->last = p;
 }
-//1 if element is deleted, 0 if not
+
+/*
+ * Remove o elemento da lista, retorna 1 se foi removido, 0 se nao
+ */
 int delete_element(list *l, elem *x) {
     node *current, *previous;
     current = l->first;
@@ -107,6 +117,9 @@ int delete_element(list *l, elem *x) {
     return 1;
 }
 
+/*
+ * Remove o primeiro elemento da lista. Retorna 0 se a lista e vazia
+ */
 int delete_first(list *l, elem *x){
     if(l->first == NULL)
         return 0;
@@ -116,12 +129,15 @@ int delete_first(list *l, elem *x){
 
 }
 
+/*
+ * Insere num elmentos aleatorios na lista l
+ */
 int create_random_list(list *l, int num){
     srand(10295051);
     create(l);
     int i, temp;
     for(i = 0; i<num; i++){
-        temp = rand()%50;
+        temp = rand();
         //if an error occurred during insertion
         if(!insert(l, &temp)){
             return 0;
@@ -130,6 +146,9 @@ int create_random_list(list *l, int num){
     return 1;
 }
 
+/*
+ * Imprime a lista
+ */
 void print_list(list *l){
     node *p = l->first;
     printf("\n");
@@ -139,6 +158,9 @@ void print_list(list *l){
     }
 }
 
+/*
+ * Insere num elementos crescentes na lista l
+ */
 int create_increasing_list(list *l, int num){
     create(l);
     int i, temp;
@@ -150,6 +172,9 @@ int create_increasing_list(list *l, int num){
     return 1;
 }
 
+/*
+ * Insere num elementos decresentes na lista l
+ */
 int create_decreasing_list(list *l, int num){
     create(l);
     int i, temp;
@@ -161,6 +186,9 @@ int create_decreasing_list(list *l, int num){
     return 1;
 }
 
+/*
+ * Ordenar a lista usando Insertion Sort
+ */
 int insertion_sort(list *l){
     elem x;
     list *ordered = (list *) malloc(sizeof(list));
@@ -176,40 +204,11 @@ int insertion_sort(list *l){
     free(ordered);
     return 1;
 
-
-
-
-}
-//todo instead of moving values considering switching nodes
-int selection_sort(list *l){
-
-    //pointer moves over elements from left to right, compares them with value of selector which is trying to find minimum value
-    node *pointer, *selector, *minimum;
-    elem info;
-    pointer = l->first;
-    //if list is empty
-    if(pointer == NULL)
-        return 0;
-    //if pointer->next is null, it is last element and list is already ordered
-    while(pointer->next != NULL){
-        selector = pointer->next;
-        minimum = pointer;
-        while(selector != NULL){
-            if(selector->info < minimum->info)
-                minimum = selector;
-            selector = selector->next;
-        }
-
-        //do the switch
-        info = pointer->info;
-        pointer ->info = minimum->info;
-        minimum->info = info;
-
-        pointer = pointer->next;
-    }
-    return 1;
 }
 
+/*
+ * Ordenar a lista usando Bubble Sort
+ */
 int bubble_sort(list *l){
     int i, switched;
     node *pointer, *next;
@@ -239,15 +238,9 @@ int bubble_sort(list *l){
     return 1;
 }
 
-node* get_last_node(list *l){
-    node* pointer = l->first;
-    while(pointer != NULL && pointer->next != NULL){
-        pointer = pointer->next;
-    }
-    return pointer;
-}
-
-
+/*
+ * Trocar os valores armazenados em node1 e node2
+ */
 void swap(node* node1, node* node2){
     if(node1 != NULL && node2 != NULL) {
         elem temp = node1->info;
@@ -256,6 +249,9 @@ void swap(node* node1, node* node2){
     }
 }
 
+/*
+ * Ordena a lista, deixando todos elementos menor do pivo a esquerda, e os elementos maiores a direita, retorna o pivo
+ */
 node * partition (list *l,node * start , node* end) {
     if(start == NULL)
         return NULL;
@@ -281,6 +277,9 @@ node * partition (list *l,node * start , node* end) {
    return prev;
 }
 
+/*
+ * Funcao recursiva para quick sort. Divide a lista usando partition e depois chama quicksort para as duas partes da lista
+ */
 void quick_sort_aux(list *l, node *start, node *end) {
     if (start == NULL || end == NULL)
         return;
@@ -302,6 +301,9 @@ void quick_sort_aux(list *l, node *start, node *end) {
     }
 }
 
+/*
+ * Chama a funcao recursivo para quicksort
+ */
 int quick_sort(list *l){
     quick_sort_aux(l, l->first, l->last);
     return 1;
