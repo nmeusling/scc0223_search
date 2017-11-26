@@ -7,7 +7,6 @@
  */
 
 #include "list.h"
-#include <unistd.h>
 
 /*
  * Inicializa a lista
@@ -212,7 +211,7 @@ int insertion_sort(list *l) {
  * Ordenar a lista usando Bubble Sort
  */
 int bubble_sort(list *l) {
-    int i, switched;
+    int switched;
     node *pointer, *next;
     elem info;
 

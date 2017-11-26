@@ -16,8 +16,6 @@ int input_size();
 
 void run_trials();
 
-double random_trial(int size, int repetitions, int type);
-
 int main() {
     run_trials();
     return 0;
