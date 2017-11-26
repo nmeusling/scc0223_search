@@ -6,9 +6,6 @@
  *
  */
 
-#ifndef UNTITLED_SEARCH_H
-#define UNTITLED_SEARCH_H
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -59,5 +56,3 @@ int bubble_sort(list *l);
 //ordena a lista usando quick sort
 int quick_sort(list *l);
 
-
-#endif //UNTITLED_SEARCH_H
