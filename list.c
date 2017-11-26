@@ -1,6 +1,10 @@
-//
-// Created by nmeusling on 10/11/17.
-//
+/*
+ * Natalie Menato
+ * Numero USP: 10295051
+ * 26/11/2017
+ * Submissao para SCC0223 Trabalho 2 - parte 1
+ *
+ */
 
 #include "list.h"
 #include <unistd.h>
@@ -34,34 +38,34 @@ int insert(list *l, elem *x) {
     l->last = p;
     return 1;
 }
+
 /*
  * Insere um elemento na lista ordenada
  */
-int insert_ordered(list *l, elem *x){
+int insert_ordered(list *l, elem *x) {
     node *current, *prev, *p;
 
-    p=(node*) malloc(sizeof(node));
-    if (p==NULL)
+    p = (node *) malloc(sizeof(node));
+    if (p == NULL)
         return 0;
     else {
 
-        p->info=*x;
-        if ((l->first==NULL) || (*x<l->first->info)) {
-            if(l->first ==NULL)
+        p->info = *x;
+        if ((l->first == NULL) || (*x < l->first->info)) {
+            if (l->first == NULL)
                 l->last = p;
-            p->next=l->first;
-            l->first=p;
-        }
-        else {
-            prev=NULL;
-            current=l->first;
-            while ((current!=NULL) && (current->info<=*x)) {
-                prev=current;
-                current=current->next;
+            p->next = l->first;
+            l->first = p;
+        } else {
+            prev = NULL;
+            current = l->first;
+            while ((current != NULL) && (current->info <= *x)) {
+                prev = current;
+                current = current->next;
             }
-            p->next=current;
-            prev->next=p;
-            if(p->next == NULL)
+            p->next = current;
+            prev->next = p;
+            if (p->next == NULL)
                 l->last = p;
         }
     }
@@ -102,15 +106,13 @@ int delete_element(list *l, elem *x) {
     if (current == NULL)
         return 0;
     //element is first in list
-    if (previous == NULL){
+    if (previous == NULL) {
         l->first = current->next;
     }
         //last element in list
-    else if(current->next==NULL){
+    else if (current->next == NULL) {
         l->last = previous;
-    }
-    else
-    {
+    } else {
         previous->next = current->next;
     }
     free(current);
@@ -120,8 +122,8 @@ int delete_element(list *l, elem *x) {
 /*
  * Remove o primeiro elemento da lista. Retorna 0 se a lista e vazia
  */
-int delete_first(list *l, elem *x){
-    if(l->first == NULL)
+int delete_first(list *l, elem *x) {
+    if (l->first == NULL)
         return 0;
     *x = l->first->info;
     l->first = l->first->next;
@@ -132,14 +134,14 @@ int delete_first(list *l, elem *x){
 /*
  * Insere num elmentos aleatorios na lista l
  */
-int create_random_list(list *l, int num){
+int create_random_list(list *l, int num) {
     srand(10295051);
     create(l);
     int i, temp;
-    for(i = 0; i<num; i++){
+    for (i = 0; i < num; i++) {
         temp = rand();
         //if an error occurred during insertion
-        if(!insert(l, &temp)){
+        if (!insert(l, &temp)) {
             return 0;
         }
     }
@@ -149,10 +151,10 @@ int create_random_list(list *l, int num){
 /*
  * Imprime a lista
  */
-void print_list(list *l){
+void print_list(list *l) {
     node *p = l->first;
     printf("\n");
-    while(p != NULL){
+    while (p != NULL) {
         printf("%d ", p->info);
         p = p->next;
     }
@@ -161,12 +163,12 @@ void print_list(list *l){
 /*
  * Insere num elementos crescentes na lista l
  */
-int create_increasing_list(list *l, int num){
+int create_increasing_list(list *l, int num) {
     create(l);
     int i, temp;
-    for(i=0; i<num; i++){
+    for (i = 0; i < num; i++) {
         temp = i;
-        if(!insert(l, &temp))
+        if (!insert(l, &temp))
             return 0;
     }
     return 1;
@@ -175,12 +177,12 @@ int create_increasing_list(list *l, int num){
 /*
  * Insere num elementos decresentes na lista l
  */
-int create_decreasing_list(list *l, int num){
+int create_decreasing_list(list *l, int num) {
     create(l);
     int i, temp;
-    for(i=num; i>0; i--){
+    for (i = num; i > 0; i--) {
         temp = i;
-        if(!insert(l, &temp))
+        if (!insert(l, &temp))
             return 0;
     }
     return 1;
@@ -189,13 +191,13 @@ int create_decreasing_list(list *l, int num){
 /*
  * Ordenar a lista usando Insertion Sort
  */
-int insertion_sort(list *l){
+int insertion_sort(list *l) {
     elem x;
     list *ordered = (list *) malloc(sizeof(list));
-    if(ordered == NULL)
+    if (ordered == NULL)
         return 0;
     create(ordered);
-    while(l->first != NULL) {
+    while (l->first != NULL) {
         delete_first(l, &x);
         insert_ordered(ordered, &x);
     }
@@ -209,22 +211,22 @@ int insertion_sort(list *l){
 /*
  * Ordenar a lista usando Bubble Sort
  */
-int bubble_sort(list *l){
+int bubble_sort(list *l) {
     int i, switched;
     node *pointer, *next;
     elem info;
 
     switched = 1; //0 when no swaps were made
 
-    while(switched != 0){
+    while (switched != 0) {
         switched = 0;
 
         pointer = l->first;
-        if(pointer == NULL)
+        if (pointer == NULL)
             return 0;
         next = pointer->next;
 
-        while(next != NULL) {
+        while (next != NULL) {
             if (next->info < pointer->info) {
                 info = pointer->info;
                 pointer->info = next->info;
@@ -241,8 +243,8 @@ int bubble_sort(list *l){
 /*
  * Trocar os valores armazenados em node1 e node2
  */
-void swap(node* node1, node* node2){
-    if(node1 != NULL && node2 != NULL) {
+void swap(node *node1, node *node2) {
+    if (node1 != NULL && node2 != NULL) {
         elem temp = node1->info;
         node1->info = node2->info;
         node2->info = temp;
@@ -252,29 +254,29 @@ void swap(node* node1, node* node2){
 /*
  * Ordena a lista, deixando todos elementos menor do pivo a esquerda, e os elementos maiores a direita, retorna o pivo
  */
-node * partition (list *l,node * start , node* end) {
-    if(start == NULL)
+node *partition(list *l, node *start, node *end) {
+    if (start == NULL)
         return NULL;
-    node* i = start->next;
-    if(i ==  NULL){
+    node *i = start->next;
+    if (i == NULL) {
         return NULL;
     }
     node *prev = NULL;
-    node * pivot = start; //first element is pivot
-    node *j =  start->next;
+    node *pivot = start; //first element is pivot
+    node *j = start->next;
     int final = 0;
-    while(j != NULL && !final){
-        if(j == end)
+    while (j != NULL && !final) {
+        if (j == end)
             final = 1;
-        if(j->info < pivot->info){
-            swap(i,j);
+        if (j->info < pivot->info) {
+            swap(i, j);
             prev = i;
             i = i->next;
         }
         j = j->next;
     }
     swap(pivot, prev);
-   return prev;
+    return prev;
 }
 
 /*
@@ -304,7 +306,7 @@ void quick_sort_aux(list *l, node *start, node *end) {
 /*
  * Chama a funcao recursivo para quicksort
  */
-int quick_sort(list *l){
+int quick_sort(list *l) {
     quick_sort_aux(l, l->first, l->last);
     return 1;
 }

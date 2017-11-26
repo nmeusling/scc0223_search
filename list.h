@@ -1,6 +1,10 @@
-//
-// Created by nmeusling on 10/11/17.
-//
+/*
+ * Natalie Menato
+ * Numero USP: 10295051
+ * 26/11/2017
+ * Submissao para SCC0223 Trabalho 2 - parte 1
+ *
+ */
 
 #ifndef UNTITLED_SEARCH_H
 #define UNTITLED_SEARCH_H

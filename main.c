@@ -1,32 +1,39 @@
-//
-// Created by nmeusling on 10/11/17.
-//
+/*
+ * Natalie Menato
+ * Numero USP: 10295051
+ * 26/11/2017
+ * Submissao para SCC0223 Trabalho 2 - parte 1
+ *
+ */
 
 #include "list.h"
 
 double quick_random(int size, int repetitions);
-int input_repetitions ();
+
+int input_repetitions();
+
 int input_size();
+
 void run_trials();
+
 double random_trial(int size, int repetitions, int type);
 
-int main(){
+int main() {
     run_trials();
-    //printf("Quick Random: %lf", quick_random(80000,10));
     return 0;
 }
 
 /*
  * Pede para o usuario digitar o numero de repeticoes, retorna o valor
  */
-int input_repetitions (){
+int input_repetitions() {
     int repetitions = 0;
-    char *str = (char*)malloc(sizeof(char)*50);
+    char *str = (char *) malloc(sizeof(char) * 50);
     char *end;
-    while(repetitions <= 0) {
+    while (repetitions <= 0) {
         printf("Digite o numero de repeticoes: ");
         fgets(str, 50, stdin);
-        repetitions = (int)strtol(str, &end, 10);
+        repetitions = (int) strtol(str, &end, 10);
     }
     return repetitions;
 }
@@ -34,14 +41,14 @@ int input_repetitions (){
 /*
  * Pede para o usuario digitar o numero de elementos na lista, retorna o valor
  */
-int input_size(){
+int input_size() {
     int size = 0;
-    char *str = (char*)malloc(sizeof(char)*50);
+    char *str = (char *) malloc(sizeof(char) * 50);
     char *end;
-    while(size <= 0) {
+    while (size <= 0) {
         printf("Digite o tamanho da lista: ");
         fgets(str, 50, stdin);
-        size = (int)strtol(str, &end, 10);
+        size = (int) strtol(str, &end, 10);
     }
     return size;
 
@@ -50,60 +57,60 @@ int input_size(){
 /*
  * Ordenar com quick sort uma lista aleatoria de size elementos, fazendo repetitions repeticoes, retorna o tempo medio para ordenar
  */
-double quick_random(int size, int repetitions){
+double quick_random(int size, int repetitions) {
     int i;
     list random;
     double tot_time = 0;
     clock_t begin, end;
 
-    for(i = 0; i < repetitions; i++){
+    for (i = 0; i < repetitions; i++) {
         create_random_list(&random, size);
         begin = clock();
         quick_sort(&random);
         end = clock();
         destroy(&random);
-        tot_time += (double)(end-begin)/CLOCKS_PER_SEC;
+        tot_time += (double) (end - begin) / CLOCKS_PER_SEC;
     }
-    return tot_time/repetitions;
+    return tot_time / repetitions;
 }
 
 /*
  * Ordenar com quick sort uma lista incremente de size elementos, fazendo repetitions repeticoes, retorna o tempo medio para ordenar
  */
-double quick_increasing(int size, int repetitions){
+double quick_increasing(int size, int repetitions) {
     int i;
     list increasing;
     double tot_time = 0;
     clock_t begin, end;
 
-    for(i = 0; i < repetitions; i++){
+    for (i = 0; i < repetitions; i++) {
         create_increasing_list(&increasing, size);
         begin = clock();
         quick_sort(&increasing);
         end = clock();
         destroy(&increasing);
-        tot_time += (double)(end-begin)/CLOCKS_PER_SEC;
+        tot_time += (double) (end - begin) / CLOCKS_PER_SEC;
     }
-    return tot_time/repetitions;
+    return tot_time / repetitions;
 }
 
 /*
  * Ordenar com quick sort uma lista decremente de size elementos, fazendo repetitions repeticoes, retorna o tempo medio para ordenar
  */
-double quick_decreasing(int size, int repetitions){
+double quick_decreasing(int size, int repetitions) {
     int i;
     list decreasing;
     double tot_time = 0;
 
     clock_t begin, end;
 
-    for(i = 0; i < repetitions; i++){
+    for (i = 0; i < repetitions; i++) {
         create_decreasing_list(&decreasing, size);
         begin = clock();
         quick_sort(&decreasing);
         end = clock();
         destroy(&decreasing);
-        tot_time += (double)(end-begin)/CLOCKS_PER_SEC;
+        tot_time += (double) (end - begin) / CLOCKS_PER_SEC;
     }
 
     return tot_time / repetitions;
@@ -112,20 +119,20 @@ double quick_decreasing(int size, int repetitions){
 /*
  * Ordenar com insertion sort uma lista aleatoria de size elementos, fazendo repetitions repeticoes, retorna o tempo medio para ordenar
  */
-double insertion_random(int size, int repetitions){
+double insertion_random(int size, int repetitions) {
     int i;
     list random;
-    double tot_time =0;
+    double tot_time = 0;
 
     clock_t begin, end;
 
-    for(i = 0; i < repetitions; i++){
+    for (i = 0; i < repetitions; i++) {
         create_random_list(&random, size);
         begin = clock();
         insertion_sort(&random);
         end = clock();
         destroy(&random);
-        tot_time += (double)(end-begin)/CLOCKS_PER_SEC;
+        tot_time += (double) (end - begin) / CLOCKS_PER_SEC;
     }
 
     return tot_time / repetitions;
@@ -134,20 +141,20 @@ double insertion_random(int size, int repetitions){
 /*
  * Ordenar com insertion sort uma lista incremente de size elementos, fazendo repetitions repeticoes, retorna o tempo medio para ordenar
  */
-double insertion_increasing(int size, int repetitions){
+double insertion_increasing(int size, int repetitions) {
     int i;
     list increasing;
-    double tot_time =0;
+    double tot_time = 0;
 
     clock_t begin, end;
 
-    for(i = 0; i < repetitions; i++){
+    for (i = 0; i < repetitions; i++) {
         create_increasing_list(&increasing, size);
         begin = clock();
         insertion_sort(&increasing);
         end = clock();
         destroy(&increasing);
-        tot_time += (double)(end-begin)/CLOCKS_PER_SEC;
+        tot_time += (double) (end - begin) / CLOCKS_PER_SEC;
     }
     return tot_time / repetitions;
 }
@@ -155,20 +162,20 @@ double insertion_increasing(int size, int repetitions){
 /*
  * Ordenar com insertion sort uma lista decremente de size elementos, fazendo repetitions repeticoes, retorna o tempo medio para ordenar
  */
-double insertion_decreasing(int size, int repetitions){
+double insertion_decreasing(int size, int repetitions) {
     int i;
     list decreasing;
-    double tot_time =0;
+    double tot_time = 0;
 
     clock_t begin, end;
 
-    for(i = 0; i < repetitions; i++){
+    for (i = 0; i < repetitions; i++) {
         create_decreasing_list(&decreasing, size);
         begin = clock();
         insertion_sort(&decreasing);
         end = clock();
         destroy(&decreasing);
-        tot_time += (double)(end-begin)/CLOCKS_PER_SEC;
+        tot_time += (double) (end - begin) / CLOCKS_PER_SEC;
     }
     return tot_time / repetitions;
 }
@@ -176,21 +183,21 @@ double insertion_decreasing(int size, int repetitions){
 /*
  * Ordenar com bubble sort uma lista aleatoria de size elementos, fazendo repetitions repeticoes, retorna o tempo medio para ordenar
  */
-double bubble_random(int size, int repetitions){
+double bubble_random(int size, int repetitions) {
     int i;
     list random;
 
-    double tot_time =0;
+    double tot_time = 0;
 
     clock_t begin, end;
 
-    for(i = 0; i < repetitions; i++){
+    for (i = 0; i < repetitions; i++) {
         create_random_list(&random, size);
         begin = clock();
         bubble_sort(&random);
         end = clock();
         destroy(&random);
-        tot_time += (double)(end-begin)/CLOCKS_PER_SEC;
+        tot_time += (double) (end - begin) / CLOCKS_PER_SEC;
     }
     return tot_time / repetitions;
 }
@@ -198,21 +205,21 @@ double bubble_random(int size, int repetitions){
 /*
  * Ordenar com bubble sort uma lista incremente de size elementos, fazendo repetitions repeticoes, retorna o tempo medio para ordenar
  */
-double bubble_increasing(int size, int repetitions){
+double bubble_increasing(int size, int repetitions) {
     int i;
     list increasing;
 
-    double tot_time =0;
+    double tot_time = 0;
 
     clock_t begin, end;
 
-    for(i = 0; i < repetitions; i++){
+    for (i = 0; i < repetitions; i++) {
         create_increasing_list(&increasing, size);
         begin = clock();
         bubble_sort(&increasing);
         end = clock();
         destroy(&increasing);
-        tot_time += (double)(end-begin)/CLOCKS_PER_SEC;
+        tot_time += (double) (end - begin) / CLOCKS_PER_SEC;
     }
     return tot_time / repetitions;
 }
@@ -220,21 +227,21 @@ double bubble_increasing(int size, int repetitions){
 /*
  * Ordenar com bubble sort uma lista decremente de size elementos, fazendo repetitions repeticoes, retorna o tempo medio para ordenar
  */
-double bubble_decreasing(int size, int repetitions){
+double bubble_decreasing(int size, int repetitions) {
     int i;
     list decreasing;
 
-    double tot_time =0;
+    double tot_time = 0;
 
     clock_t begin, end;
 
-    for(i = 0; i < repetitions; i++){
+    for (i = 0; i < repetitions; i++) {
         create_decreasing_list(&decreasing, size);
         begin = clock();
         bubble_sort(&decreasing);
         end = clock();
         destroy(&decreasing);
-        tot_time += (double)(end-begin)/CLOCKS_PER_SEC;
+        tot_time += (double) (end - begin) / CLOCKS_PER_SEC;
     }
     return tot_time / repetitions;
 }
